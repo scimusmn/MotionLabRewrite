@@ -1,0 +1,3 @@
+node_modules/*
+client/celeb_seq/*
+client/sequences/*
