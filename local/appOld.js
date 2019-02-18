@@ -230,69 +230,73 @@ var pollLight = new function () {
   var cCount = 0;
 
   this.setGreen = function () {
-    for (let i=0; i<5; i++){
+    for (let i = 0; i < 5; i++) {
       arduino.digitalWrite(pole[i], 0);
     }
+
     arduino.digitalWrite(8, 1);
   };
 
-  this.setRed = function(){
-    for(let i=0; i<5; i++){
-      arduino.digitalWrite(pole[i],0);
+  this.setRed = function () {
+    for (let i = 0; i < 5; i++) {
+      arduino.digitalWrite(pole[i], 0);
     }
+
     arduino.digitalWrite(7, 1);
   };
 
-  this.setStage = function(count){
-    for(let i=0; i<5; i++){
+  this.setStage = function (count) {
+    for (let i = 0; i < 5; i++) {
       arduino.digitalWrite(pole[i], cArr[count][i]);
     }
   };
 
   this.blink = function () {
     cCount = 1;
-    cInt = setInterval(()=>{
-      for(let i=1; i<5; i++){
-        arduino.digitalWrite(pole[i], ((cCount)?1:0));
+    cInt = setInterval(()=> {
+      for (let i = 1; i < 5; i++) {
+        arduino.digitalWrite(pole[i], ((cCount) ? 1 : 0));
       }
-      cCount=!cCount;
-    },250);
-  }
+
+      cCount = !cCount;
+    }, 250);
+  };
 
   this.stopBlink = function () {
     clearInterval(cInt);
-  }
-}
+  };
+};
 
 ////////////////////////////////////////////////////////////////////////
 // ######################## File manipulation ####################### //
 ////////////////////////////////////////////////////////////////////////
 
-var deleteFolderRecursive = function(path) {
-  if(path && fs.existsSync(path)) {
-    fs.readdirSync(path).forEach(function(file,index){
-      var curPath = path + "/" + file;
-      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+var deleteFolderRecursive = function (path) {
+  if (path && fs.existsSync(path)) {
+    fs.readdirSync(path).forEach(function (file, index) {
+      var curPath = path + '/' + file;
+      if (fs.lstatSync(curPath).isDirectory()) { // recurse
         deleteFolderRecursive(curPath);
       } else { // delete file
         fs.unlinkSync(curPath);
       }
     });
+
     fs.rmdirSync(path);
   }
 };
 
-window.save = (dir,saveOther) => {
+window.save = (dir, saveOther) => {
   if (fs.existsSync(dir)) deleteFolderRecursive(dir);
   fs.mkdirSync(dir);
   output.textContent = 'Saving...';
-  cam.save(dir, function() {
+  cam.save(dir, function () {
     output.textContent = 'Done Saving.';
     //force folder to update it's modification time.
-    fs.utimesSync(dir,NaN,NaN);
+    fs.utimesSync(dir, NaN, NaN);
     //console.log('seq=' + dir.replace('./app/',''));
     //var num = fs.readdirSync('sequences/temp' + (dirNum - 1)).length;
-    if (wss&&!saveOther) wss.broadcast('seq=' + dir.replace('./app/',''));
+    if (wss && !saveOther) wss.broadcast('seq=' + dir.replace('./app/', ''));
     console.log('saved to ' + dir);
     cam.ready = true;
     waitForSave = false;
@@ -304,13 +308,14 @@ var countdown = (count) => {
 
   if (count > 0) {
     output.textContent = count;
-    if(count<4){
+    if (count < 4) {
       audio[count].currentTime = 0;
       audio[count].play();
     }
+
     setTimeout(() => { countdown(count - 1); }, 1000);
-    if(count == 1 ) cam.capture();
-    else if(count == 5) getReady.play();
+    if (count == 1) cam.capture();
+    else if (count == 5) getReady.play();
   } else {
     output.textContent = 'Recording...';
     audio[count].currentTime = 0;
@@ -320,7 +325,7 @@ var countdown = (count) => {
     pollLight.blink();
     console.log('start capture');
 
-    setTimeout(function() {
+    setTimeout(function () {
       exitTrack.play();
       output.textContent = 'Done Recording';
       cam.stopCapture();
@@ -328,12 +333,12 @@ var countdown = (count) => {
       pollLight.setRed();
       console.log('done capturing');
       var dir = './app/sequences/temp' + dirNum++;
-      if(dirNum>=cfg.setsToStore) dirNum = 0;
+      if (dirNum >= cfg.setsToStore) dirNum = 0;
       greenExitLight(1);
-      blinkInt = setInterval(()=>{
+      blinkInt = setInterval(()=> {
         blinkBool = !blinkBool;
-        greenExitLight((blinkBool)?1:0);
-      },500)
+        greenExitLight((blinkBool) ? 1 : 0);
+      }, 500);
       clearInterval(redInt);
       redExitLight(0);
       save(dir);
@@ -343,10 +348,10 @@ var countdown = (count) => {
 
 window.resetCam = function () {
   waitForSave = false;
-}
+};
 
-window.startCntdn = function(pin, state) {
-  if ( !state && cam.ready && !waitForSave && !cageOccupied) {
+window.startCntdn = function (pin, state) {
+  if (!state && cam.ready && !waitForSave && !cageOccupied) {
     //timeoutFlag = false;
     resetIdleTimeout();
     clearTimeout(goTimeout);
@@ -358,8 +363,8 @@ window.startCntdn = function(pin, state) {
     greenExitLight(0);
     clearInterval(redInt);
     redExitLight(0);
-    greenEntranceLight( 0);
-    redEntranceLight( 1);
+    greenEntranceLight(0);
+    redEntranceLight(1);
   }
 
 };
@@ -367,16 +372,16 @@ window.startCntdn = function(pin, state) {
 var startBut = document.querySelector('#start');
 var saveBut = document.querySelector('#save');
 
-saveBut.onclick = (e)=>{
-  save(document.querySelector('#folder').value,true);
-}
+saveBut.onclick = (e)=> {
+  save(document.querySelector('#folder').value, true);
+};
 
-startBut.onclick = ()=>{
+startBut.onclick = ()=> {
   cageOccupied = false;
   window.startCntdn();
-}
+};
 
-window.admitNext = ()=>{
+window.admitNext = ()=> {
   showGo();
   resetIdleTimeout();
   greenExitLight(0);
