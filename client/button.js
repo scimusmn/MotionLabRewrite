@@ -1,8 +1,12 @@
 'use strict';
 
-include([], function() {
-  var buttonTag = inheritFrom(HTMLImageElement, function() {
-    this.attachedCallback = function() {
+obtain([], ()=> {
+  class Button extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
       var _this = this;
 
       var inactiveSrc = _this.src;
@@ -20,14 +24,14 @@ include([], function() {
         _this.src = inactiveSrc;
       };
 
-      _this.onmousedown = function(e) {
+      _this.onmousedown = function (e) {
         e.preventDefault();
         _this.pressed = true;
         document.onmouseup = _this.onmouseup;
         _this.src = activeSrc;
       };
     };
-  });
+  };
 
   var ButtonTag = document.registerElement('but-ton', { prototype: buttonTag.prototype, extends: 'img' });
 });

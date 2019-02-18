@@ -1,47 +1,48 @@
- 'use strict';
+'use strict';
 
 console.log('app');
 
-let incs = [
+let obtains = [
   'thumbnails.js',
-  'webSockets.js',
+  'µ/sockets.js',
   'videoPlayer.js',
-  'button.js',
   'config.js',
 ];
 
-include(incs, () => {
+obtain(obtains, () => {
   console.log('loaded!');
 
-  window.onload = function() {
+  exports.app = {};
+
+  exports.app.start = ()=> {
+    var visGroup = µ('#thumbs');
+    var celebGroup = µ('#celebThumbs');
+
+    //sets the class of the body, to make the just you screen visible
+    visGroup.onChoose = (set)=> {
+      µ('body')[0].className = 'JustYou';
+
+      //if we're in admin mode, send a delete request of the selected set,
+      // which forces a reload on all of the playback stations
+      if (visGroup.adminMode) window.webSockClient.send('del', set.setName);
+    };
+
+    //function to get the index in the parent element of a child
+    var elementIndex = function (child) {
+      if (child.previousSibling == null) return 1;
+      else return elementIndex(child.previousSibling) + 1;
+    };
+
+    //create a blank string to hold the indices of the pressed child elements
+    celebGroup.code = '';
+
+    //when a celeb set is selected, store the index in the code variable
+    celebGroup.onChoose = (set)=> {
+      celebGroup.code += elementIndex(set);
+    };
   };
 
-  var visGroup = µ('#thumbs');
 
-  var celebGroup = µ('#celebThumbs');
-
-  //sets the class of the body, to make the just you screen visible
-  visGroup.onChoose = (set)=> {
-    µ('body')[0].className = 'JustYou';
-
-    //if we're in admin mode, send a delete request of the selected set,
-    // which forces a reload on all of the playback stations
-    if (visGroup.adminMode) window.webSockClient.send('del=' + set.setName);
-  };
-
-  //function to get the index in the parent element of a child
-  var elementIndex = function(child) {
-    if (child.previousSibling == null) return 1;
-    else return elementIndex(child.previousSibling) + 1;
-  };
-
-  //create a blank string to hold the indices of the pressed child elements
-  celebGroup.code = '';
-
-  //when a celeb set is selected, store the index in the code variable
-  celebGroup.onChoose = (set)=> {
-    celebGroup.code += elementIndex(set);
-  };
 
   //when we receive a message from the server
   window.webSockClient.onMessage = (evt) => {
@@ -129,7 +130,7 @@ include(incs, () => {
 
   µ('#sbs').onclick = showSBS;
 
-  µ('#fyv').onclick = function() {
+  µ('#fyv').onclick = function () {
     //show the visitor thumbnail select screen
     showSelect();
 
@@ -145,17 +146,17 @@ include(incs, () => {
   };
 
   //leave admin mode when the 'exit admin mode button is pressed.'
-  µ('#adminExit').onclick = function() {
+  µ('#adminExit').onclick = function () {
     visGroup.adminMode = false;
     showSelect();
   };
 
-  µ('#playBoth').onSet = function() {
+  µ('#playBoth').onSet = function () {
     µ('#visitorPlayer').pause();
     µ('#celebPlayer').pause();
   };
 
-  µ('#playBoth').onReset = function() {
+  µ('#playBoth').onReset = function () {
     µ('#visitorPlayer').play();
     µ('#celebPlayer').play();
   };

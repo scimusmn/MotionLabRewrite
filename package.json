@@ -1,0 +1,14 @@
+{
+  "author": "ajhg",
+  "license": "CC0-1.0",
+  "homepage": "https://github.com/scimusmn/MotionLab",
+  "gypfile": true,
+  "dependencies": {
+    "electron-rebuild": "^1.1.4",
+    "bindings": "~1.2.1",
+    "nan": "^2.0.0",
+    "serialport": "^3.1.2",
+    "ws": "^1.1.0",
+    "express":"^4.14.0"
+  }
+}
