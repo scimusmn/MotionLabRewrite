@@ -1,0 +1,57 @@
+/******************************************************************************/
+/* Copyright © 2013 Vieworks Co., Ltd. All Rights Reserved.
+/*
+/* Vieworks Imaging Solution-Shadow GigE SDK 1.1.0 for Linux
+/*
+/* 07/15/2013
+/******************************************************************************/
+
+
+1. Overview
+ VIS-Shadow is a software package including SDK and viewer designed for use with 
+Vieworks Gigabit Ethernet (GigE) cameras on Linux-based systems.
+
+
+2. System Requirements
+ The recommended GigE network adapters for use with Vieworks GigE cameras are Intel 
+PCI-Express network interface cards (PT or CT series). If your motherboard supports 
+only standard PCI slots, it is recommended to use general Intel PCI NIC (GT, MT or 
+PRO/1000 series).
+ We recommend that you install VIS-Shadow on Ubuntu 12.04 (x86_64 - 64 bit) - based 
+system.
+
+
+3. Installation Package
+ The VIS-Shadow installation package contains the following files:
+README				//the current document:
+install.sh			//shell script for installing VIS-Shadow
+uninstall.sh			//shell script for removing VIS-Shadow
+VIS-Shadow_1.1.0_x86_64.deb	//debian binary package file
+VIS-Shadow_1.1.0_x86_64.tar.gz	//compressed file for installing VIS-Shadow manually
+
+
+4. Installation and Removal
+ We strongly recommend that you use a Root account when installing or removing VIS-Shadow. 
+It is also recommended that you restart the system after installing or removing VIS-Shadow.
+
+Installation:
+	sudo sh install.sh 
+Removal:
+	sudo sh uninstall.sh
+
+ The commands above install or remove VwSDK, sample, doc, etc. They also configure related 
+settings or remove a configuration.
+For more information, refer to VIS-Shadow Installation Manual.
+
+5. Network Optimization
+ We recommend that you set the network adapter’s MTU to 9000 and packet size used by the 
+camera to 8992.
+For more information, refer to VIS-Shadow Installation Manual.
+
+
+
+
+
+
+
+

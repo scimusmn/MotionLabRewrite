@@ -3,9 +3,9 @@
     {
       "target_name": "vieworks",
       "sources": [
-        "./VieworksModule/inits.cc",
-        "./VieworksModule/vieworks.cc",
-        "./VieworksModule/imgBuffer.cpp",
+        "./local/VieworksModule/inits.cc",
+        "./local/VieworksModule/vieworks.cc",
+        "./local/VieworksModule/imgBuffer.cpp",
       ],
       "libraries": [
         "/usr/lib/libfreeimage.so.3",
@@ -22,7 +22,7 @@
         "/usr/include/VIS-Shadow",
         "/opt/genicam2.3.1/library/CPP/include",
         "/usr/include/qt4",
-        "./VieworksModule/"
+        "./local/VieworksModule/"
       ],
       "library_dirs": [
         "../vendor/ubuntu/FreeImage/lib",
