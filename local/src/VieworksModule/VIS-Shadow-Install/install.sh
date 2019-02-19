@@ -2,6 +2,8 @@
 
 set -o errexit
 
+trap 'echo "Error while installing vieworks libraries"' ERR
+
 CMD_OUTPUT=$1
 
 echo "Output is going to $CMD_OUTPUT"
