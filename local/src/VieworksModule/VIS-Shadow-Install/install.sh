@@ -2,11 +2,9 @@
 
 set -o errexit
 
-trap 'echo "Error while installing vieworks libraries"' ERR
+trap 'echo "Error while installing vieworks libraries."' ERR
 
 CMD_OUTPUT=$1
-
-echo "Output is going to $CMD_OUTPUT"
 
 VIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -33,12 +31,12 @@ echo "   install 7 of 7 .... libqtgui4 "
 sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install libqtgui4 -y >${CMD_OUTPUT} 2>&1
 
 echo ""
-echo "    Other Package Installation's Completion!"
+echo "    Dependency Installation Completion!"
 echo ""
 
 echo "Installing VIS-Shadow packages...";
 
-sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb >${CMD_OUTPUT} 2>&1
+sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb
 
 #sudo sh genicam.sh
 #sudo sh netsetting.sh
