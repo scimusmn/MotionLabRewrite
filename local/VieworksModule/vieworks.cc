@@ -52,20 +52,20 @@ void vwCam::Init(v8::Local<v8::Object> exports) {
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
   //Prototype
-  NODE_SET_PROTOTYPE_METHOD(tpl, "output", output);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "allocateBuffer", allocateBuffer);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "setImageGain", setImageGain);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "setFrameRate", setFrameRate);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "getWidth", getWidth);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "getHeight", getHeight);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "startCapture", start);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "stop", stop);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "save", save);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "getImage", getImage);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "capture", capture);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "stopCapture", stopCapture);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "isCapturing", isCapturing);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "idle", idle);
+  Nan::SetPrototypeMethod(tpl, "output", output);
+  Nan::SetPrototypeMethod(tpl, "allocateBuffer", allocateBuffer);
+  Nan::SetPrototypeMethod(tpl, "setImageGain", setImageGain);
+  Nan::SetPrototypeMethod(tpl, "setFrameRate", setFrameRate);
+  Nan::SetPrototypeMethod(tpl, "getWidth", getWidth);
+  Nan::SetPrototypeMethod(tpl, "getHeight", getHeight);
+  Nan::SetPrototypeMethod(tpl, "startCapture", start);
+  Nan::SetPrototypeMethod(tpl, "stop", stop);
+  Nan::SetPrototypeMethod(tpl, "save", save);
+  Nan::SetPrototypeMethod(tpl, "getImage", getImage);
+  Nan::SetPrototypeMethod(tpl, "capture", capture);
+  Nan::SetPrototypeMethod(tpl, "stopCapture", stopCapture);
+  Nan::SetPrototypeMethod(tpl, "isCapturing", isCapturing);
+  Nan::SetPrototypeMethod(tpl, "idle", idle);
 
   constructor.Reset(tpl->GetFunction());
   exports->Set(Nan::New("camera").ToLocalChecked(), tpl->GetFunction());
