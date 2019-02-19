@@ -8,13 +8,13 @@
         "./local/VieworksModule/imgBuffer.cpp",
       ],
       "libraries": [
-        "/usr/lib/libfreeimage.so.3",
+        "/usr/lib/x86_64-linux-gnu/libfreeimage.so.3",
         "/usr/lib/libVwGigE.so",
-        "/usr/lib/libVwTli.so.1.1.0",
+        "/usr/lib/libVwTli.so",
         "/opt/genicam2.3.1/bin/Linux64_x64/liblog4cpp_gcc40_v2_3.so",
         "/opt/genicam2.3.1/bin/Linux64_x64/libGenApi_gcc40_v2_3.so",
         "/opt/genicam2.3.1/bin/Linux64_x64/libGCBase_gcc40_v2_3.so",
-        "/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.6"
+        "/usr/lib/x86_64-linux-gnu/libQtCore.so.4"
       ],
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
