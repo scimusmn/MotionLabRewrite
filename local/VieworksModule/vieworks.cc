@@ -91,23 +91,23 @@ void vwCam::handleSaveFinish(int saved){
   saveCB->Call(argc,argv);
 }
 
-void vwCam::idle(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::idle) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   //obj->app->processEvents();
   info.GetReturnValue().Set(Nan::New((int)0));
 }
 
-void vwCam::getWidth(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::getWidth) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   info.GetReturnValue().Set(Nan::New((int)obj->width));
 }
 
-void vwCam::getHeight(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::getHeight) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   info.GetReturnValue().Set(Nan::New((int)obj->height));
 }
 
-void vwCam::New(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::New) {
   if (info.IsConstructCall()) {
     // Invoked as constructor: `new vwCam(...)`
     vwCam* obj = new vwCam();
@@ -236,7 +236,7 @@ void vwCam::open(){
 
 
 
-void vwCam::output(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::output) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   info.GetReturnValue().Set(Nan::New(obj->outputString).ToLocalChecked());
 }
@@ -305,7 +305,7 @@ void vwCam::store(IMAGE_INFO* pImageInfo){
 
 //This would pass the current, live image from the camera as a javascript array,
 // if it could actually reliably pass the data.
-void vwCam::getImage(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::getImage) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
 
   if(!obj->bLiveCap){
@@ -319,7 +319,7 @@ void vwCam::getImage(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   info.GetReturnValue().Set(ret.ToLocalChecked());*/
 }
 
-void vwCam::capture(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::capture) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   RESULT result = RESULT_ERROR;
   if(obj->bReady){
@@ -335,7 +335,7 @@ void vwCam::capture(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   }
 }
 
-void vwCam::stopCapture(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::stopCapture) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   if(obj->bCapturing){
     obj->bCapturing = false;
@@ -352,12 +352,12 @@ void vwCam::stopCapture(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   }
 }
 
-void vwCam::isCapturing(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::isCapturing) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   info.GetReturnValue().Set(Nan::New((int)obj->bCapturing));
 }
 
-void vwCam::setFrameRate(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::setFrameRate) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   double rate = info[0]->IsUndefined() ? 1 : info[0]->NumberValue();
   RESULT result = RESULT_ERROR;
@@ -380,7 +380,7 @@ void vwCam::setFrameRate(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
 }
 
-void vwCam::setImageGain(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::setImageGain) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   double gain = info[0]->IsUndefined() ? 1 : info[0]->NumberValue();
   RESULT result = RESULT_ERROR;
@@ -394,7 +394,7 @@ void vwCam::setImageGain(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   }
 }
 
-void vwCam::start(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::start) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   RESULT result = RESULT_ERROR;
   v8::Local<v8::Function> callb = info[0].As<v8::Function>();
@@ -414,7 +414,7 @@ void vwCam::start(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   }
 }
 
-void vwCam::allocateBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::allocateBuffer) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   double numFrames = info[0]->IsUndefined() ? 1 : info[0]->NumberValue();
   RESULT result = RESULT_ERROR;
@@ -429,7 +429,7 @@ void vwCam::allocateBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   }
 }
 
-void vwCam::stop(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::stop) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   RESULT result = RESULT_ERROR;
   if(obj->bReady){
@@ -446,7 +446,7 @@ void vwCam::stop(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 using namespace std;
 using namespace v8;
 
-void vwCam::save(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(vwCam::save) {
   vwCam* obj = ObjectWrap::Unwrap<vwCam>(info.Holder());
   String::Utf8Value cmd(info[0]);
   string dir = (string(*cmd).length() ? string(*cmd) : "temp");
