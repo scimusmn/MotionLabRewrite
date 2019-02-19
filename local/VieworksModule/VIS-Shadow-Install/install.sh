@@ -42,8 +42,6 @@ echo "   install 4 of 7 .... libqt4-core "
 sudo apt-get install libqt4-designer libqt4-opengl libqt4-svg libqtgui4 libqtwebkit4 -y 2> error.log
 echo "   install 6 of 7 .... libqt4-dev "
 sudo apt-get install libqt4-dev -y 2> error.log
-echo "   install 7 of 7 .... libqt4-gui "
-sudo apt-get install libqt4-gui -y 2> error.log
 
 echo ""
 echo "    Other Package Installation's Completion!"
