@@ -8,13 +8,13 @@
         "./local/VieworksModule/imgBuffer.cpp",
       ],
       "libraries": [
-        "/usr/lib/x86_64-linux-gnu/libfreeimage.so.3",
-        "/usr/lib/libVwGigE.so",
-        "/usr/lib/libVwTli.so",
+        "libfreeimage.so.3",
+        "libVwGigE.so",
+        "libVwTli.so",
         "/opt/genicam2.3.1/bin/Linux64_x64/liblog4cpp_gcc40_v2_3.so",
         "/opt/genicam2.3.1/bin/Linux64_x64/libGenApi_gcc40_v2_3.so",
         "/opt/genicam2.3.1/bin/Linux64_x64/libGCBase_gcc40_v2_3.so",
-        "/usr/lib/x86_64-linux-gnu/libQtCore.so.4"
+        "libQtCore.so.4"
       ],
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
@@ -26,7 +26,9 @@
       ],
       "library_dirs": [
         "../vendor/ubuntu/FreeImage/lib",
-        "../vendor/ubuntu/vieworks/lib/x64"
+        "../vendor/ubuntu/vieworks/lib/x64",
+        "/usr/lib/x86_64-linux-gnu/",
+        "/usr/lib/"
       ],
       'cflags_cc!': ['-fno-rtti'],
       'cflags_cc': ['-fexceptions'],
