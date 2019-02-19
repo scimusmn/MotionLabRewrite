@@ -32,7 +32,7 @@ echo ""
 
 echo "Installing VIS-Shadow packages...";
 
-sudo dpkg -i $DIR/VIS-Shadow_1.1.0_x86_64.deb 2> error.log
+sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb 2> error.log
 
 #sudo sh genicam.sh
 #sudo sh netsetting.sh
