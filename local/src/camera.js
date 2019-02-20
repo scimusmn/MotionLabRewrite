@@ -11,7 +11,7 @@ var requests = [
 
 if (!window.muse.app.camera) window.muse.app.camera = {
   cam: {
-    capture: ()=>{};
+    capture: ()=> {},
   },
 };
 
