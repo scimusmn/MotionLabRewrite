@@ -18,13 +18,14 @@ var requests = [
   './src/files.js',
   'µ/server/socket.js',
   'µ/server/express.js',
+  'path',
 ];
 
-obtain(requests, (files, { wss }, fileServer)=> {
+obtain(requests, (files, { wss }, fileServer, path)=> {
 
   exports.app = {};
 
-  fileServer.staticRoute('/', __dirname + '/../client');
+  fileServer.staticRoute('/', path.join(__dirname + '/../client'));
   fileServer.staticRoute('/common', __dirname + '/../common');
 
   //fileServer.base.use('', fileServer.express.static(path.join(__dirname, '../client')));
