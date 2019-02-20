@@ -1,7 +1,7 @@
 var config = require('electron').remote.getGlobal('config');
 
 var requests = [
-  './src/io.js',
+  //'./src/io.js',
   './src/camera.js',
   './src/audio.js',
 ];
@@ -15,7 +15,7 @@ if(!window.muse.app.flow) window.muse.app.flow = {
 };
 var store = window.muse.app.flow;
 
-obtain(requests, (io, camera, audio)=> {
+obtain(requests, ( camera, audio)=> {
 
   /////////////////////////////////////////////////////////////////////////////
   //####################### brightsign interactions ###########################
