@@ -17,7 +17,7 @@ var requests = [
   //'./src/flow.js',
   './src/files.js',
   'µ/server/socket.js',
-  'µ/server/files.js',
+  'µ/server/express.js',
 ];
 
 obtain(requests, (files, { wss }, fileServer)=> {
