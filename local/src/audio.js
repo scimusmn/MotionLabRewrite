@@ -1,12 +1,12 @@
 'use strict';
 
-if (!window.muse.app.audio) window.muse.app.io = {
+if (!window.muse.app.audio) window.muse.app.audio = {
   byIndex: [],
   click: null,
   exit: null,
   ready: null,
 };
-var store = window.muse.app.io;
+var store = window.muse.app.audio;
 
 module.exports = store;
 

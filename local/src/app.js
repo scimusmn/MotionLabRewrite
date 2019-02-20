@@ -20,30 +20,30 @@ var requests = [
   'µ/server/files.js',
 ];
 
-obtain(requests, (flow, files, { wss }, fileServer)=> {
-
-  exports.app = {};
-
-  fileServer.base.use('', express.static(path.join(__dirname, '../client')));
-  fileServer.base.use('/common', express.static(path.join(__dirname, '../common')));
-
-  wss.onClientConnect((ws)=> {
-    var seqs = files.getFiles('app/sequences/');
-    var cels = file.getFiles('app/celeb_seq/');
-
-    seqs.forEach(seq=>ws.sendPacket('seq', seq));
-    cels.forEach(cel=>ws.sendPacket('cel', cel));
-
-    ws.addListener('delete', ({ data })=> {
-      files.deleteFolder(data);
-      wss.broadcast('reload', '1');
-    });
-  });
-
-  exports.app.start = ()=> {
-    flow.onAppReady();
-  };
-});
+// obtain(requests, (flow, files, { wss }, fileServer)=> {
+//
+//   exports.app = {};
+//
+//   fileServer.base.use('', express.static(path.join(__dirname, '../client')));
+//   fileServer.base.use('/common', express.static(path.join(__dirname, '../common')));
+//
+//   wss.onClientConnect((ws)=> {
+//     var seqs = files.getFiles('app/sequences/');
+//     var cels = file.getFiles('app/celeb_seq/');
+//
+//     seqs.forEach(seq=>ws.sendPacket('seq', seq));
+//     cels.forEach(cel=>ws.sendPacket('cel', cel));
+//
+//     ws.addListener('delete', ({ data })=> {
+//       files.deleteFolder(data);
+//       wss.broadcast('reload', '1');
+//     });
+//   });
+//
+//   exports.app.start = ()=> {
+//     flow.onAppReady();
+//   };
+// });
 
 // var startBut = document.querySelector('#start');
 // var saveBut = document.querySelector('#save');
