@@ -5,19 +5,18 @@ var config = remote.getGlobal('config');
 
 //var vieworks = require('bindings')('vieworks');
 
-
 var requests = [
   './files.js',
 ];
 
-if(!window.muse.app.camera ) window.muse.app.camera = {
+if (!window.muse.app.camera) window.muse.app.camera = {
   cam: null,
 };
 
 var store = window.muse.app.camera;
 
 obtain(requests, (files)=> {
-  exports.init = ()=>{};//(cb)=>{
+  exports.init = ()=> {};//(cb)=>{
   //   if(!store.cam){
   //     store.cam = new vieworks.camera(()=> {
   //       store.cam.setFrameRate(config.cam.frameRate);
@@ -38,13 +37,13 @@ obtain(requests, (files)=> {
   //   }
   // }
 
-  exports.isReady = ()=>{};///()=>store.cam.ready;
+  exports.isReady = ()=> {};///()=>store.cam.ready;
 
-  exports.base = ()=>{};//store.cam;
+  exports.base = ()=> {};//store.cam;
 
-  exports.capture = ()=>{};//store.cam.capture;
+  exports.capture = ()=> {};//store.cam.capture;
 
-  exports.endCapture = ()=>{};//(folderName, onSave)=>{
+  exports.endCapture = ()=> {};//(folderName, onSave)=>{
   //   store.cam.stopCapture();
   //
   //   files.deleteFolder(folderName);//deleteFolderRecursive(dir);
@@ -57,4 +56,4 @@ obtain(requests, (files)=> {
   //   });
   // }
 
-}
+});
