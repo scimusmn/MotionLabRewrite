@@ -14,13 +14,13 @@ var config = remote.getGlobal('config');
 window.muse.app = {};
 
 var requests = [
-  './src/flow.js',
+  //'./src/flow.js',
   './src/files.js',
   'µ/server/socket.js',
   'µ/server/files.js',
 ];
 
-obtain(requests, (flow, files, { wss }, fileServer)=> {
+obtain(requests, (files, { wss }, fileServer)=> {
 
   exports.app = {};
 
@@ -41,7 +41,7 @@ obtain(requests, (flow, files, { wss }, fileServer)=> {
   });
 
   exports.app.start = ()=> {
-    flow.onAppReady();
+    //flow.onAppReady();
   };
 });
 
