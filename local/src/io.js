@@ -7,7 +7,7 @@ var requests = [
 window.muse.app.io = {};
 var store = window.muse.app.io;
 
-obtain(requests, (Arduino)=> {
+obtain(requests, ({ Arduino })=> {
 
   if (!store.arduino) {
     store.arduino = new Arduino(config.io);
