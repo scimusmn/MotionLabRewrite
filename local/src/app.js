@@ -14,8 +14,8 @@ var config = remote.getGlobal('config');
 window.muse.app = {};
 
 var requests = [
-  './src/flow.js',
-  './src/files.js',
+  './flow.js',
+  './files.js',
   'µ/server/socket.js',
   'µ/server/files.js',
 ];
