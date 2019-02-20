@@ -158,5 +158,6 @@ obtain(requests, (io, camera, audio)=> {
 
   exports.onAppReady = ()=>{
     audio.load();
+    camera.init();
   }
 });
