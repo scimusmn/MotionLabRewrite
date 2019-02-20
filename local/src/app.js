@@ -45,6 +45,7 @@ obtain(requests, (files, { wss }, fileServer)=> {
 
   exports.app.start = ()=> {
     //flow.onAppReady();
+    console.log('app start');
   };
 });
 
