@@ -1,13 +1,13 @@
 var config = require('electron').remote.getGlobal('config');
 
 var requests = [
-  'µ/Arduino.js',
+  //'µ/Arduino.js',
 ];
 
 window.muse.app.io = {};
 var store = window.muse.app.io;
 
-obtain(requests, (Arduino)=> {
+obtain(requests, ()=> {
 
   if (!store.arduino) {
     store.arduino = new Arduino(config.io);
