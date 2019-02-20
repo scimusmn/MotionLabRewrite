@@ -18,15 +18,17 @@ var requests = [
   './src/files.js',
   'µ/server/socket.js',
   'µ/server/express.js',
-  'path',
 ];
 
-obtain(requests, (files, { wss }, fileServer, path)=> {
+obtain(requests, (files, { wss }, fileServer)=> {
 
   exports.app = {};
 
-  fileServer.base.use('', fileServer.base.static(path.join(__dirname, '../client')));
-  fileServer.base.use('/common', fileServer.base.static(path.join(__dirname, '../common')));
+  fileServer.staticRoute('', __dirname + '../client');
+  fileServer.staticRoute('/common', __dirname + '../common');
+
+  //fileServer.base.use('', fileServer.express.static(path.join(__dirname, '../client')));
+  //fileServer.base.use('/common', fileServer.express.static(path.join(__dirname, '../common')));
 
   wss.onClientConnect((ws)=> {
     var seqs = files.getFiles('app/sequences/');
