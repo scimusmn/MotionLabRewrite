@@ -27,12 +27,6 @@ obtain(requests, (files, { wss }, fileServer, path)=> {
 
   console.log(path.join(__dirname + '/../client'));
 
-  fileServer.staticRoute('/', path.join(__dirname + '/../client'));
-  fileServer.staticRoute('/common', __dirname + '/../common');
-
-  //fileServer.base.use('', fileServer.express.static(path.join(__dirname, '../client')));
-  //fileServer.base.use('/common', fileServer.express.static(path.join(__dirname, '../common')));
-
   wss.onClientConnect((ws)=> {
     var seqs = files.getFiles('app/sequences/');
     var cels = file.getFiles('app/celeb_seq/');
