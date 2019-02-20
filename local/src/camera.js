@@ -3,7 +3,7 @@ var remote = require('electron').remote;
 
 var config = remote.getGlobal('config');
 
-var vieworks = require('bindings')('vieworks');
+//var vieworks = require('bindings')('vieworks');
 
 
 var requests = [
