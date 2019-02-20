@@ -6,7 +6,7 @@ var config = remote.getGlobal('config');
 //var vieworks = require('bindings')('vieworks');
 
 var requests = [
-  './files.js',
+  './src/files.js',
 ];
 
 if (!window.muse.app.camera) window.muse.app.camera = {
