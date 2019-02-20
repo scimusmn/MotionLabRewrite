@@ -11,7 +11,7 @@ module.exports = {
   brightsign: {
     practiceVideoLength: 25000,
     goVideoLength: 17000,
-  }
+  },
   io: {
     manufacturer: 'FTDI',
   },
