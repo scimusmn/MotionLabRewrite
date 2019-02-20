@@ -25,6 +25,8 @@ obtain(requests, (files, { wss }, fileServer, path)=> {
 
   exports.app = {};
 
+  console.log(path.join(__dirname + '/../client'));
+
   fileServer.staticRoute('/', path.join(__dirname + '/../client'));
   fileServer.staticRoute('/common', __dirname + '/../common');
 
