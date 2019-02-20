@@ -10,7 +10,9 @@ var requests = [
 ];
 
 if (!window.muse.app.camera) window.muse.app.camera = {
-  cam: null,
+  cam: {
+    capture: ()=>{};
+  },
 };
 
 var store = window.muse.app.camera;
@@ -31,6 +33,8 @@ obtain(requests, (files)=> {
         });
 
         if (cb) cb();
+
+        exports.capture = store.cam.capture;
       });
     } else {
       if (store.cam.ready) cb();
