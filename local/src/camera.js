@@ -19,8 +19,9 @@ var store = window.muse.app.camera;
 
 obtain(requests, (files)=> {
   exports.init = (cb)=> {
-    if (!store.cam) {
+    if (!store.cam.startCapture) {
       store.cam = new vieworks.camera(()=> {
+        console.log('created camera objects');
         store.cam.setFrameRate(config.cam.frameRate);
         store.cam.setImageGain(config.cam.imageGain);
 
@@ -28,6 +29,7 @@ obtain(requests, (files)=> {
 
         store.cam.startCapture(function (val) {
           store.cam.ready = true;
+          console.log('camera is ready');
           //optionally draw the camera image. See appOld.js for details
 
         });
@@ -56,7 +58,7 @@ obtain(requests, (files)=> {
       files.touchFolder(folderName);
       store.cam.ready = true;
 
-      cb();
+      onSave();
     });
   };
 

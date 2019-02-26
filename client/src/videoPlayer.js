@@ -1,15 +1,15 @@
 'use strict';
 
-include(['flipbook.js', 'slider.js', 'toggleButton.js'], function() {
+obtain(['src/flipbook.js', '/src/slider.js', 'src/toggleButton.js'], ({ Flipbook }, { Slider }, { Toggle })=> {
   //custom element for playing back the image sets.
   if (!customElements.get('video-player')) {
 
     class playerTag extends HTMLElement {
-      constructor {
+      constructor() {
         super();
         var _this = this;
 
-        var idleTimer = null;
+        this.idleTimer = null;
 
         //create the header that holds celebrity athlete names and organizations.
         _this.header = µ('+div', _this);
@@ -18,8 +18,10 @@ include(['flipbook.js', 'slider.js', 'toggleButton.js'], function() {
         _this.org = µ('+div', _this.header);
 
         //create the Flipbook element that actually plays back images
-        _this.player = new FlipBook();
+        _this.player = new Flipbook();
         _this.appendChild(_this.player);
+
+        _this.player.setAttribute('is', 'flip-book');
 
         //init the players with 800 frames of storage.
         //TODO: pull this from config.js instead.
@@ -27,7 +29,7 @@ include(['flipbook.js', 'slider.js', 'toggleButton.js'], function() {
 
         //create the play/pause button.
         //TODO: change ToggleButton to use CSS for active and inactive images.
-        _this.button = new ToggleButton();
+        _this.button = new Toggle();
         _this.button.setAttribute('active', 'assets/pngs/play-one.png');
         _this.button.setAttribute('inactive', 'assets/pngs/pause-one.png');
         _this.button.className = 'justYou';
@@ -45,11 +47,9 @@ include(['flipbook.js', 'slider.js', 'toggleButton.js'], function() {
         //add the controls div to the root element.
         _this.appendChild(_this.controls);
 
-        _this.onVideoEnd = ()=> {};
-
         //when the video ends in the player, set the play button, and make the
         // onVideoEnded callback.
-        _this.player.onStop = function() {
+        _this.player.onStop = function () {
           console.log('ended');
           _this.button.set();
           _this.onVideoEnd();
@@ -80,56 +80,55 @@ include(['flipbook.js', 'slider.js', 'toggleButton.js'], function() {
           _this.button.set();
         };
 
-        _this.onLoad = () => {
-
-        };
-
         _this.player.onLoad = () => {
           _this.onLoad();
         };
+      }
 
-        _this.loadSet = (dir) => {
-          console.log(dir + ' in videoP');
-          clearInterval(idleTimer);
-          idleTimer = setInterval(_this.player.idle, 50);
-          ajax(dir + 'info.html', (html)=> {
-            //console.log(html);
-            if (html) {
-              console.log(µ('name', html)[0]);
-              _this.athlete.textContent = µ('name', html)[0].textContent;
-              _this.org.textContent = µ('org', html)[0].textContent;
-            }
-          });
-          _this.player.loadSet(dir);
-        };
+      onLoad() {};
 
-        _this.onUnload = () => {
+      onVideoEnd () {};
 
-        };
+      onUnload () {};
 
-        _this.unload = () => {
-          clearInterval(idleTimer);
-          _this.athlete.textContent = '';
-          _this.org.textContent = '';
-          _this.player.reset();
-        };
+      pause () {
+        this.player.stop();
+        this.button.set();
+      }
 
-        _this.play = () => {
-          _this.player.play();
-          _this.button.reset();
-        };
+      play () {
+        this.player.play();
+        this.button.reset();
+      }
 
-        _this.pause = () => {
-          _this.player.stop();
-          _this.button.set();
-        };
+      loadSet (dir) {
+        var _this = this;
+        console.log(`Loading ${dir} in videoPlayer`);
+        clearInterval(_this.idleTimer);
+        this.idleTimer = setInterval(_this.player.idle, 50);
+        get(dir + 'info.json', { type: 'json' }).then((req)=> {
+          var info = req.response;
+          if (info) {
+            console.log(info.name);
+            _this.athlete.textContent = info.name;
+            _this.org.textContent = info.org;
+          }
+        });
+        _this.player.loadSet(dir);
       };
 
-      this.attachedCallback = function() {
+      unload () {
+        clearInterval(this.idleTimer);
+        this.athlete.textContent = '';
+        this.org.textContent = '';
+        this.player.reset();
+      }
+    }
 
-      };
-    });
+    customElements.define('video-player', playerTag);
   }
 
-  window.VideoPlayer = document.registerElement('video-player', playerTag);
+  exports.VideoPlayer = customElements.get('video-player');
+
+  provide(exports);
 });

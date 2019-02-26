@@ -1,4 +1,6 @@
 var config = require('electron').remote.getGlobal('config');
+var appRoot = require('electron').remote.getGlobal('appRoot');
+
 
 var requests = [
   './src/io.js',
@@ -12,6 +14,7 @@ if(!window.muse.app.flow) window.muse.app.flow = {
   cageOccupied: false,
   waitingForSave: false,
   goShown: false,
+  lastVideo: null,
 };
 var store = window.muse.app.flow;
 
@@ -85,7 +88,7 @@ obtain(requests, (io, camera, audio)=> {
 
     if (count > 0) {
       if (count == 1) cam.capture();
-      setTimeout(() => { countdown(count - 1); }, 1000);
+      setTimeout(() => countdown(count - 1), ((count<4) ? 1000 : 2000));
     } else {
       audio.click.currentTime = 0;
       audio.click.play();
@@ -99,11 +102,11 @@ obtain(requests, (io, camera, audio)=> {
 
         audio.exit.play();
 
-        var dir = './app/sequences/temp' + dirNum++;
-        if (dirNum >= config.record.setsToStore) dirNum = 0;
+        store.lastVideo = 'temp' + dirNum;
 
-        camera.endCapture(dir, ()=>{
-          exports.onSave();
+        camera.endCapture(`${appRoot}/app/common/sequences/${store.lastVideo}`, ()=>{
+          exports.onSave(store.lastVideo);
+          dirNum = (dirNum + 1)%config.record.setsToStore;
         });
 
       }, config.record.time);
@@ -111,14 +114,14 @@ obtain(requests, (io, camera, audio)=> {
   };
 
   exports.startCountdown = ()=> {
-    if (camera.base.ready && !store.waitingForSave && !store.cageOccupied) {
+    if (camera.isReady() && !store.waitingForSave) {
       store.waitingForSave = true;
       store.cageOccupied = true;
 
       delayIdleMode();
       audioPracticePlaying = false;
       clearInterval(blinkInt);
-      countdown(5);
+      countdown(4);
 
       exitLights.set('off');
       entranceLights.set('red');
@@ -131,7 +134,7 @@ obtain(requests, (io, camera, audio)=> {
   /////////////////////////////////////////////////////////////////////////////
 
   io.onCageButtonPress = ()=>{
-    exports.startCountdown();
+    if(!store.cageOccupied) exports.startCountdown();
   }
 
   io.onExitDoorOpen = ()=>{
@@ -153,11 +156,16 @@ obtain(requests, (io, camera, audio)=> {
     startIdleMode();
   }
 
-  exports.onSave = ()=>{
+  exports.onSave = (dir)=>{
   }
+
+  exports.cageReset = cageReset;
+
+  exports.lastVideo = ()=>store.lastVideo;
 
   exports.onAppReady = ()=>{
     audio.load();
     camera.init();
+    console.log('loaded flow reqs');
   }
 });

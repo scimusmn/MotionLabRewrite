@@ -8,7 +8,7 @@ cd $AUX_DIR
 
 echo -e "\n* Install the Native Abstraction for Node dependencies..."
 
-sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install libfreeimage-dev >$1 2>&1
+sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install llibfreeimage3 libfreeimage-dev >$1 2>&1
 
 sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install node-gyp >$1 2>&1
 
@@ -20,4 +20,4 @@ fi
 
 touch $AUX_DIR/../current/VIS_Installed
 
-sudo chmod -R 777 /usr/include/VIS-Shadow
+sudo chmod -R 755 /usr/include/VIS-Shadow

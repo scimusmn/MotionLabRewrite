@@ -10,6 +10,7 @@ var remote = require('electron').remote;
 var process = remote.process;
 
 var config = remote.getGlobal('config');
+var appRoot = remote.getGlobal('appRoot');
 
 window.muse.app = {};
 
@@ -25,14 +26,14 @@ obtain(requests, (flow, files, { wss }, fileServer, path)=> {
 
   exports.app = {};
 
-  console.log(path.join(__dirname + '/../client'));
+  wss.onClientConnect(({ ws })=> {
+    console.log(ws);
 
-  wss.onClientConnect((ws)=> {
-    var seqs = files.getFiles('app/sequences/');
-    var cels = file.getFiles('app/celeb_seq/');
+    var seqs = files.getFiles(`${appRoot}/app/common/captures/visitors/`);
+    var cels = files.getFiles(`${appRoot}/app/common/captures/celebs/`);
 
-    seqs.forEach(seq=>ws.sendPacket('seq', seq));
-    cels.forEach(cel=>ws.sendPacket('cel', cel));
+    seqs.forEach(seq=>ws.sendPacket('seq', '/common/captures/visitors/' + seq));
+    cels.forEach(cel=>ws.sendPacket('cel', '/common/captures/celebs/' + cel));
 
     ws.addListener('delete', ({ data })=> {
       files.deleteFolder(data);
@@ -40,23 +41,35 @@ obtain(requests, (flow, files, { wss }, fileServer, path)=> {
     });
   });
 
+  flow.onSave = (dir)=> {
+    wss.broadcast('seq', dir);
+  };
+
   exports.app.start = ()=> {
-    //flow.onAppReady();
+    flow.onAppReady();
     console.log('app start');
+
+    var startBut = µ('#start');
+    var saveBut = µ('#save');
+
+    saveBut.onclick = (e)=> {
+      if (flow.lastVideo) {
+        files.copyFolder(
+          `${appRoot}/app/common/captures/visitors/${flow.lastVideo}`,
+          `${appRoot}/app/common/captures/celebs/${µ('#folder').value}`
+        );
+      }
+
+      save(µ('#folder').value, true);
+    };
+
+    startBut.onclick = ()=> {
+      flow.startCountdown();
+    };
   };
 });
 
-// var startBut = document.querySelector('#start');
-// var saveBut = document.querySelector('#save');
-//
-// saveBut.onclick = (e)=> {
-//   save(document.querySelector('#folder').value, true);
-// };
-//
-// startBut.onclick = ()=> {
-//   cageOccupied = false;
-//   window.startCntdn();
-// };
+
 
 /////////////////////////////////////////////////////////////////////////////
 //############################ Keyboard input ###############################

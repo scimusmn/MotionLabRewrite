@@ -1,3 +1,3 @@
 node_modules/*
-client/celeb_seq/*
-client/sequences/*
+common/captures/celebs/*
+common/captures/visitors/*

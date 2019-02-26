@@ -1,12 +1,12 @@
 @font-face {
 	font-family: sports;
-	src: url('assets/fonts/avenir.ttc');
+	src: url('common/fonts/avenir.ttc');
 }
 
 @font-face {
   font-family: 'Avenir Next Condensed';
-  src: url('/media/fonts/AvenirNextCondensed.woff') format('woff'),
-  url('/media/fonts/AvenirNextCondensed.ttf') format('truetype');
+  src: url('/common/fonts/AvenirNextCondensed.woff') format('woff'),
+  url('/common/fonts/AvenirNextCondensed.ttf') format('truetype');
   font-style: normal;
 }
 
@@ -19,12 +19,12 @@
 }
 
 body {
-	background-image: url("assets/pngs/BG.png");
+	background-image: url("../assets/pngs/BG.png");
 	/*background-size: cover;*/
 	background-repeat: no-repeat;
 	width: 100%;
 	height: 100%;
-	cursor: none;
+	/* cursor: none; */
 	-webkit-user-select: none;
 	font-weight: bolder;
 	font-family: 'Avenir Next Condensed', sans-serif;
@@ -259,7 +259,7 @@ sli-der {
 }
 
 sli-der[orient='horiz'] {
-	background:url(assets/pngs/scroll-bed.png) no-repeat center center;
+	background:url('../assets/pngs/scroll-bed.png') no-repeat center center;
 	background-size: 87% 33%;
 	height: 5vh;
 	width: calc(100% - 1vh - 5vh)
@@ -268,7 +268,7 @@ sli-der[orient='horiz'] {
 .slider-background{
 	position:relative;
 	display:inline-block;
-	background:url(assets/pngs/scroll-bed.png) no-repeat center center;
+	background:url('../assets/pngs/scroll-bed.png') no-repeat center center;
 	text-align: left;
 	height: 5vh;
 	width: calc(100% - 5vh)
@@ -294,12 +294,12 @@ sli-der[orient='horiz'] {
 .slider-handle {
 	height: 5vh;
 	width: 5vh;
-	background:url(assets/pngs/scroll-lever.png) no-repeat center center;
+	background:url('../assets/pngs/scroll-lever.png') no-repeat center center;
 	background-size: auto 100%;
 }
 
 sli-der[orient='vert'] {
-	background:url(assets/pngs/vertScrollBed.png) no-repeat center center;
+	background:url('../assets/pngs/vertScrollBed.png') no-repeat center center;
 	background-size: 33% 92%;
 	width: 5vh;
 	height: calc(100% - 2vh);

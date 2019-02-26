@@ -5,6 +5,7 @@ if (!window.muse.app.audio) window.muse.app.audio = {
   click: null,
   exit: null,
   ready: null,
+  load: ()=> {},
 };
 var store = window.muse.app.audio;
 

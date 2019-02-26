@@ -1,0 +1,1 @@
+cmd_Release/vieworks.node := c++ -bundle -undefined dynamic_lookup -Wl,-no_pie -Wl,-search_paths_first -mmacosx-version-min=10.7 -arch x86_64 -L./Release -stdlib=libc++  -o Release/vieworks.node Release/obj.target/vieworks/local/src/VieworksDummy/inits.o Release/obj.target/vieworks/local/src/VieworksDummy/vieworks.o 

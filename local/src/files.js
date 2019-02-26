@@ -14,14 +14,22 @@ obtain(requests, (fs, { execSync })=> {
 
   exports.touchFolder = folderName => fs.utimesSync(folderName, NaN, NaN);
 
+  exports.copyFolder = (src, dest)=> {
+    execSync(`cp ${src} ${dest}`);
+  };
+
   var getModTime = name=>fs.statSync(name).atime.getTime();
 
   exports.getFiles = (dir) => {
-    var files = fs.readdirSync(dir);
+    console.log(dir);
+    if (fs.existsSync(dir)) {
+      var files = fs.readdirSync(dir);
 
-    //rearrange files by modification date
-    files.sort((a, b)=>getModTime(dir + a) - getModTime(dir + b));
+      //rearrange files by modification date
+      files.sort((a, b)=>getModTime(dir + a) - getModTime(dir + b));
 
-    return files.map(file=>dir + file);
+      return files;
+    } else return [];
+
   };
 });

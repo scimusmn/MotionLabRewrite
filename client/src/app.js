@@ -3,20 +3,26 @@
 console.log('app');
 
 let obtains = [
-  'thumbnails.js',
-  'µ/sockets.js',
-  'videoPlayer.js',
+  'src/thumbnails.js',
+  'µ/socket.js',
+  'src/videoPlayer.js',
   'config.js',
 ];
 
-obtain(obtains, () => {
+obtain(obtains, (thumbs, sockets, vp, conf) => {
   console.log('loaded!');
+
+  var ws = sockets.get(window.location.host, false);
 
   exports.app = {};
 
+  var visGroup = null;
+  var celebGroup = null;
+
   exports.app.start = ()=> {
-    var visGroup = µ('#thumbs');
-    var celebGroup = µ('#celebThumbs');
+
+    visGroup = µ('#thumbs');
+    celebGroup = µ('#celebThumbs');
 
     //sets the class of the body, to make the just you screen visible
     visGroup.onChoose = (set)=> {
@@ -28,10 +34,7 @@ obtain(obtains, () => {
     };
 
     //function to get the index in the parent element of a child
-    var elementIndex = function (child) {
-      if (child.previousSibling == null) return 1;
-      else return elementIndex(child.previousSibling) + 1;
-    };
+    var elementIndex = el => Array.from(el.parentElement.children).indexOf(el) + 1;
 
     //create a blank string to hold the indices of the pressed child elements
     celebGroup.code = '';
@@ -40,33 +43,23 @@ obtain(obtains, () => {
     celebGroup.onChoose = (set)=> {
       celebGroup.code += elementIndex(set);
     };
+
+    ws.on('seq', (data)=> {
+      visGroup.handleSetChange(data);
+    });
+
+    ws.on('cel', (data)=> {
+      celebGroup.handleSetChange(data);
+    });
+
+    ws.on('reload', (data)=> {
+      location.reload();
+    });
+
+    ws.connect();
   };
 
-
-
-  //when we receive a message from the server
-  window.webSockClient.onMessage = (evt) => {
-    switch (evt.data.split('=')[0]){
-      //if it's calling out the address of a folder, handle it with the proper group
-      case 'seq':
-        visGroup.handleSet(evt.data.split('=')[1], parseInt(evt.data.split(':')[2]));
-        break;
-      case 'cel':
-
-        celebGroup.handleSet(evt.data.split('=')[1], parseInt(evt.data.split(':')[2]));
-        break;
-
-      //if it's a reload command, refresh the page.
-      case 'reload':
-        location.reload();
-      default:
-        break;
-    }
-  };
-
-  webSockClient.connect();
-
-  //set the flag to store the images for the celeb player
+  //set the flag to cache the images for the celeb player
   µ('#celebPlayer').player.cached = true;
 
   //once the video loads in either the celeb or visitor players, play it.
@@ -97,14 +90,14 @@ obtain(obtains, () => {
   // mode selectors
   /////////////////////////////
 
-  function showJY() {
+  function showJustYou() {
     //set the body class to JustYou, and clear the admin mode flag.
     µ('body')[0].className = 'JustYou';
     visGroup.adminMode = false;
     µ('#celebPlayer').unload();
   }
 
-  function showSBS() {
+  function showSideBySide() {
     //set the body class to SideBySide, and clear the admin mode flag.
     µ('body')[0].className = 'SideBySide';
     visGroup.adminMode = false;
@@ -126,9 +119,9 @@ obtain(obtains, () => {
   // ui functions
   /////////////////////////////
 
-  µ('#jy').onclick = showJY;
+  µ('#jy').onclick = showJustYou;
 
-  µ('#sbs').onclick = showSBS;
+  µ('#sbs').onclick = showSideBySide;
 
   µ('#fyv').onclick = function () {
     //show the visitor thumbnail select screen
@@ -161,18 +154,6 @@ obtain(obtains, () => {
     µ('#celebPlayer').play();
   };
 
-  // µ('#celebSlider').onMoved = () => {
-  //   var _this = µ('#celebSlider');
-  //   var cThumbs = µ('#celebThumbs');
-  //   cThumbs.style.marginTop = -(cThumbs.scrollHeight - cThumbs.parentNode.clientHeight) * _this.getPercent() + 'px';
-  // };
-  //
-  // µ('#celebThumbs').onMoved = () => {
-  //   var _this = µ('#celebThumbs');
-  //   var sld = µ('#celebSlider');
-  //   sld.setPercent(-(parseFloat(_this.style.marginTop) / (_this.scrollHeight - _this.parentNode.clientHeight)));
-  // };
-
   //////////////////////////////
   // idle timeout (if it hasn't been used recently)
   /////////////////////////////
@@ -195,4 +176,6 @@ obtain(obtains, () => {
       showSelect();
     }, 120000);
   };
+
+  provide(exports);
 });
