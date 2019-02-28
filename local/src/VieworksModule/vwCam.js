@@ -3,46 +3,45 @@
 var vieworks = require('bindings')('vieworks');
 var cfg = require('./config.js').config;
 
-var cam = new vieworks.camera(function(){
+var cam = new vieworks.camera(function () {
   cam.setFrameRate(cfg.frameRate);
   cam.setImageGain(cfg.imageGain);
 
-  cam.allocateBuffer(cfg.recordTime*2);
+  cam.allocateBuffer(cfg.recordTime * 2);
 
-
-  cam.onStart = ()=>{
+  cam.onStart = ()=> {
 
   };
 
-  cam.start = function() {
+  cam.start = function () {
     cam.startCapture(cam.onStart);
   };
 
-  cam.onSave = ()=>{};
+  cam.onSave = ()=> {};
 
-  cam.saveImages = function(dir) {
+  cam.saveImages = function (dir) {
     cam.isSaving = true;
-    cam.save(dir,(num)=>{
+    cam.save(dir, (num)=> {
       console.log(num + ' saved');
       cam.onSave(dir);
       cam.isSaving = false;
     });
-  }
+  };
 
-  cam.prepare = function() {
+  cam.prepare = function () {
     cam.isWaiting = true;
-  }
+  };
 
-  cam.record = function() {
-    console.log('start record')
+  cam.record = function () {
+    console.log('start record');
     cam.capture();
     cam.isWaiting = false;
-  }
+  };
 
-  cam.stopRecord = function() {
+  cam.stopRecord = function () {
     console.log('stop record');
     cam.stopCapture();
-  }
+  };
 
   cam.onReady();
 
@@ -87,16 +86,16 @@ var cam = new vieworks.camera(function(){
   });*/
 });
 
-cam.onReady = ()=>{
+cam.onReady = ()=> {
   console.log('Camera is ready.');
-}
+};
 
-cam.isReady = function() {
+cam.isReady = function () {
   //return !(cam.isCapturing() || cam.isSaving || cam.isWaiting);
   console.log(cam.isWaiting + ' ' + cam.isSaving);
-  if(cam.isWaiting) return false;
-  else if(cam.isSaving || cam.isCapturing()) return false;
+  if (cam.isWaiting) return false;
+  else if (cam.isSaving || cam.isCapturing()) return false;
   else return true;
-}
+};
 
 exports.cam = cam;
