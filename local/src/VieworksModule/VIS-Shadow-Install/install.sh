@@ -36,7 +36,11 @@ echo ""
 
 echo "Installing VIS-Shadow packages...";
 
-sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb
+
+if [[ ! -z "${flags["-c"]}" ]]; then
+  echo "${flags["-c"]}" | sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb
+fi
+
 
 #sudo sh genicam.sh
 #sudo sh netsetting.sh
