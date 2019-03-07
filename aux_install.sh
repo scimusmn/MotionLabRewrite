@@ -1,6 +1,10 @@
 #!/bin/bash
 
-CMD_OUTPUT=$1
+CMD_OUTPUT="${flags["o"]}"
+
+if [ ! -z "${flags["c"]}" ] && [ ! -z "${flags["n"]}" ]; then
+
+fi
 
 AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -8,14 +12,52 @@ cd $AUX_DIR
 
 echo -e "\n* Install the Native Abstraction for Node dependencies..."
 
-sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install llibfreeimage3 libfreeimage-dev >$1 2>&1
+sudo add-apt-repository -y ppa:teejee2008/ppa
+
+sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install ukuu
+
+sudo ukuu --install-latest
+
+# if [ $bInterface -eq 0 ]
+# then
+#         echo "setting interface"
+#         echo "#VIS-Shadow" >> /etc/network/interfaces
+#         echo "auto $giethname" >> /etc/network/interfaces
+#         echo "iface $giethname inet static" >> /etc/network/interfaces
+#         echo "address 169.254.0.60" >> /etc/network/interfaces
+#         echo "netmask 255.255.0.0" >> /etc/network/interfaces
+#         echo "gateway 0.0.0.0" >> /etc/network/interfaces
+#         echo "mtu 9000" >> /etc/network/interfaces
+#         echo "#VIS-Shadow" >> /etc/network/interfaces
+# fi
+
+# cameraIface=0
+# netIface=0
+#
+# #array_test=()
+# for iface in $(sudo lshw -C network | grep "logical name:" | sed 's/^.*: //' | $
+# do
+#   #printf "$iface\n"
+#   #array_test+=("$iface")
+#   if $(ping -c 1 -W 1 -I "$iface" google.com > /dev/null 2>&1)
+#   then
+#     echo "$iface connected"
+#     if ! netIface; then netIface=$iface; fi;
+#   else
+#     echo "Not connected: $iface"
+#     if ! netIface; then netIface=$iface; fi;
+#   fi
+# done
+
+
+sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install libfreeimage3 libfreeimage-dev >$1 2>&1
 
 sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install node-gyp >$1 2>&1
 
 echo -e "\n* Install the Vieworks Libraries..."
 
 if [[ ! -f "$AUX_DIR/../current/VIS_Installed" ]]; then
-  bash $AUX_DIR/local/src/VieworksModule/VIS-Shadow-Install/install.sh $CMD_OUTPUT
+  bash $AUX_DIR/local/src/VieworksModule/VIS-Shadow-Install/install.sh "$@"
 fi
 
 touch $AUX_DIR/../current/VIS_Installed
