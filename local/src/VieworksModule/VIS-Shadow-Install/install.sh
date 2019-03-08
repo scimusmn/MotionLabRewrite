@@ -7,6 +7,8 @@ trap 'echo "Error while installing vieworks libraries."' ERR
 CAM_IFACE='eth0'
 CMD_OUTPUT='/dev/null'
 
+echo "$@"
+
 while getopts c:o: option
 do
 case "${option}"
