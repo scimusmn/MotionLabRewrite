@@ -25,6 +25,10 @@ while getopts ':c:o:n:kr:a:s:d' option; do
     UPDATE_KERNAL=true
     echo "Kernal will be updated"
     ;;
+  s) ;;
+  r) ;;
+  a) ;;
+  d) ;;
   ?) echo "Unknown option; make sure it follows any used flags";;
   esac
 done
