@@ -15,7 +15,9 @@ while getopts ':c:o:n:' option; do
   esac
 done
 
-AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+echo "$CAM_IFACE is the camera interface"
+
+AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/../"
 
 cd $AUX_DIR
 
@@ -66,7 +68,7 @@ sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install node-gyp >$CMD_OUTPUT 2
 echo -e "\n* Install the Vieworks Libraries..."
 
 if [[ ! -f "$AUX_DIR/../current/VIS_Installed" ]]; then
-  bash $AUX_DIR/local/src/VieworksModule/VIS-Shadow-Install/install.sh "${OPTS}"
+  bash $AUX_DIR/local/src/VieworksModule/VIS-Shadow-Install/install.sh -o $CMD_OUTPUT -c $CAM_IFACE "${OPTS}"
 fi
 
 touch $AUX_DIR/../current/VIS_Installed
