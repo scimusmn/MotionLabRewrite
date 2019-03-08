@@ -13,7 +13,7 @@ while getopts c:o: option
 do
 case "${option}"
 in
-c) CAM_IFACE=${OPTARG};;
+C) CAM_IFACE=${OPTARG};;
 o) CMD_OUTPUT=${OPTARG};;
 esac
 done
