@@ -1,5 +1,7 @@
 #!/bin/bash
 
+OPTS="$@"
+
 CMD_OUTPUT='/dev/null'
 CAM_IFACE='eth0'
 NET_IFACE='eth1'
@@ -65,7 +67,7 @@ sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install node-gyp >$CMD_OUTPUT 2
 echo -e "\n* Install the Vieworks Libraries..."
 
 if [[ ! -f "$AUX_DIR/../current/VIS_Installed" ]]; then
-  bash $AUX_DIR/local/src/VieworksModule/VIS-Shadow-Install/install.sh "$@"
+  bash $AUX_DIR/local/src/VieworksModule/VIS-Shadow-Install/install.sh "${OPTS}"
 fi
 
 touch $AUX_DIR/../current/VIS_Installed
