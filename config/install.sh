@@ -12,14 +12,22 @@ echo $OPTS
 while getopts ':c:o:n:k' option; do
   case "${option}"
   in
-  c) CAM_IFACE=${OPTARG};;
+  c)
+    CAM_IFACE=${OPTARG}
+    echo "$CAM_IFACE is the camera interface"
+    ;;
   o) CMD_OUTPUT=${OPTARG};;
-  n) NET_IFACE=${OPTARG};;
-  k) UPDATE_KERNAL=true;;
+  n)
+    NET_IFACE=${OPTARG}
+    echo "$NET_IFACE is the network interface"
+    ;;
+  k)
+    UPDATE_KERNAL=true
+    echo "Kernal will be updated"
+    ;;
   esac
 done
 
-echo "$CAM_IFACE is the camera interface"
 
 AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/../"
 
