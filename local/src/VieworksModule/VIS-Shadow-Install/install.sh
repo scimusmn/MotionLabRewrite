@@ -47,9 +47,7 @@ echo ""
 echo "Installing VIS-Shadow packages...";
 
 
-if [[ ! -z "${flags["-c"]}" ]]; then
-  echo "${flags["-c"]}" | sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb
-fi
+echo "${CAM_IFACE}" | sudo dpkg -i $VIS_DIR/VIS-Shadow_1.1.0_x86_64.deb
 
 
 #sudo sh genicam.sh

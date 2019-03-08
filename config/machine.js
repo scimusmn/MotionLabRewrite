@@ -1,7 +1,7 @@
 exports.config = {
   machine: {
     autostart: {
-      env: 'env GENICAM_ROOT_V2_3=/opt/genicam2.3.1/',
+      env: '/usr/bin/env GENICAM_ROOT_V2_3=/opt/genicam2.3.1/',
     },
     gitWatch: true,
     preventSleep: true,
