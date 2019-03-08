@@ -9,7 +9,7 @@ UPDATE_KERNAL=false
 
 echo $OPTS
 
-while getopts ':c:o:n:k' option; do
+while getopts ':c:o:n:kr:a:s:d' option; do
   case "${option}"
   in
   c)
@@ -25,7 +25,7 @@ while getopts ':c:o:n:k' option; do
     UPDATE_KERNAL=true
     echo "Kernal will be updated"
     ;;
-  ?) echo ".";;
+  ?) echo "Unknown option; make sure it follows any used flags";;
   esac
 done
 
