@@ -64,6 +64,8 @@ AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/../"
 
 cd $AUX_DIR
 
+sudo node $AUX_DIR/config/ifaceConfig.js --net $NET_IFACE --cam $CAM_IFACE
+
 echo -e "\n* Install the Native Abstraction for Node dependencies..."
 
 if [ $UPDATE_KERNAL = true ]; then
