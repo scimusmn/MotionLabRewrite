@@ -5,13 +5,17 @@ OPTS="$@"
 CMD_OUTPUT='/dev/null'
 CAM_IFACE='eth0'
 NET_IFACE='eth1'
+UPDATE_KERNAL=false
 
-while getopts ':c:o:n:' option; do
+echo $OPTS
+
+while getopts ':c:o:n:k' option; do
   case "${option}"
   in
   c) CAM_IFACE=${OPTARG};;
   o) CMD_OUTPUT=${OPTARG};;
   n) NET_IFACE=${OPTARG};;
+  k) UPDATE_KERNAL=true;;
   esac
 done
 
@@ -23,11 +27,13 @@ cd $AUX_DIR
 
 echo -e "\n* Install the Native Abstraction for Node dependencies..."
 
-sudo add-apt-repository -y ppa:teejee2008/ppa
+if [ $UPDATE_KERNAL = true ]; then
+  sudo add-apt-repository -y ppa:teejee2008/ppa
 
-sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install ukuu
+  sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install ukuu
 
-sudo ukuu --install-latest
+  sudo ukuu --install-latest
+fi
 
 # if [ $bInterface -eq 0 ]
 # then
