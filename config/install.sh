@@ -25,6 +25,7 @@ while getopts ':c:o:n:k' option; do
     UPDATE_KERNAL=true
     echo "Kernal will be updated"
     ;;
+  ?) echo ".";;
   esac
 done
 
