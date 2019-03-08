@@ -1,11 +1,5 @@
 #!/bin/bash
 
-CMD_OUTPUT="${flags["o"]}"
-
-if [ ! -z "${flags["c"]}" ] && [ ! -z "${flags["n"]}" ]; then
-
-fi
-
 AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 cd $AUX_DIR
