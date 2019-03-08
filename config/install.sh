@@ -29,18 +29,18 @@ do
         # it is a boolean flag
         bool=$(echo ${arg:1} | sed s/://g)
         booleans[$bool]=true
-        #echo \"$bool\" is boolean
+        echo \"$bool\" is boolean
       else
         # it is a flag with a value
         value=$1
         flags[${arg:1}]=$value
-        echo "${flags[${arg:1}]} is $value" 
+        echo "${arg:1} is $value"
         shift
       fi
     else
       args+=("$arg")
       shift
-      #echo \"$arg\" is an arg
+      echo \"$arg\" is an arg
     fi
 done
 
