@@ -2,6 +2,8 @@
 
 OPTS="$@"
 
+echo $OPTS
+
 CMD_OUTPUT='/dev/null'
 CAM_IFACE='eth0'
 NET_IFACE='eth1'
