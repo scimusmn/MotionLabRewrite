@@ -34,6 +34,7 @@ do
         # it is a flag with a value
         value=$1
         flags[${arg:1}]=$value
+        echo "${flags[${arg:1}]} is $value" 
         shift
       fi
     else
