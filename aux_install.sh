@@ -1,5 +1,19 @@
 #!/bin/bash
 
+CMD_OUTPUT='/dev/null'
+CAM_IFACE='eth0'
+NET_IFACE='eth1'
+
+while getopts c:o:n: option
+do
+case "${option}"
+in
+c) CAM_IFACE=${OPTARG};;
+o) CMD_OUTPUT=${OPTARG};;
+n) NET_IFACE=${OPTARG};;
+esac
+done
+
 AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 cd $AUX_DIR
@@ -44,9 +58,9 @@ sudo ukuu --install-latest
 # done
 
 
-sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install libfreeimage3 libfreeimage-dev >$1 2>&1
+sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install libfreeimage3 libfreeimage-dev >$CMD_OUTPUT 2>&1
 
-sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install node-gyp >$1 2>&1
+sudo apt-get -qq -o=Dpkg::Use-Pty=0 --assume-yes install node-gyp >$CMD_OUTPUT 2>&1
 
 echo -e "\n* Install the Vieworks Libraries..."
 
