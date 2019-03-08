@@ -41,15 +41,15 @@ do
     fi
 done
 
-if [ ! -z "${flags['c']}"]; then
+if [ ! -z "${flags['c']}" ]; then
   CAM_IFACE="${flags['c']}"
 fi
 
-if [ ! -z "${flags['o']}"]; then
+if [ ! -z "${flags['o']}" ]; then
   CMD_OUTPUT="${flags['o']}"
 fi
 
-if [ ! -z "${flags['n']}"]; then
+if [ ! -z "${flags['n']}" ]; then
   NET_IFACE="${flags['n']}"
 fi
 
