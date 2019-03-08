@@ -7,32 +7,55 @@ CAM_IFACE='eth0'
 NET_IFACE='eth1'
 UPDATE_KERNAL=false
 
-echo $OPTS
+declare -A flags
+declare -A booleans
+args=()
 
-while getopts ':c:o:n:r:a:s:dk' option; do
-  case "${option}"
-  in
-  c)
-    CAM_IFACE=${OPTARG}
-    echo "$CAM_IFACE is the camera interface"
-    ;;
-  o) CMD_OUTPUT=${OPTARG};;
-  n)
-    NET_IFACE=${OPTARG}
-    echo "$NET_IFACE is the network interface"
-    ;;
-  k)
-    UPDATE_KERNAL=true
-    echo "Kernal will be updated"
-    ;;
-  s) echo ${OPTARG};;
-  r) echo ${OPTARG};;
-  a) echo ${OPTARG};;
-  d) echo ${OPTARG};;
-  ?) echo "Unknown option; make sure it follows any used flags";;
-  esac
+while [ "$1" ];
+do
+    arg=$1
+    #if the next opt starts with a '-'
+    if [ "${1:0:1}" == "-" ]
+    then
+      # move to the next opt
+      shift
+      rev=$(echo "$arg" | rev) #reverse the string
+
+      #if the next opt is not empty, or begins with a '-', or this opt ends in a ':'
+      if [ -z "$1" ] || [ "${1:0:1}" == "-" ] || [ "${rev:0:1}" == ":" ]
+      then
+        # it is a boolean flag
+        bool=$(echo ${arg:1} | sed s/://g)
+        booleans[$bool]=true
+        #echo \"$bool\" is boolean
+      else
+        # it is a flag with a value
+        value=$1
+        flags[${arg:1}]=$value
+        shift
+      fi
+    else
+      args+=("$arg")
+      shift
+      #echo \"$arg\" is an arg
+    fi
 done
 
+if [ ! -z "${flags['c']}"]; then
+  CAM_IFACE="${flags['c']}"
+fi
+
+if [ ! -z "${flags['o']}"]; then
+  CMD_OUTPUT="${flags['o']}"
+fi
+
+if [ ! -z "${flags['n']}"]; then
+  NET_IFACE="${flags['n']}"
+fi
+
+if [ "${booleans['k']}" = true ]; then
+  UPDATE_KERNAL=true
+fi
 
 AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/../"
 
