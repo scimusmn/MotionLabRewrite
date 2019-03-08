@@ -9,13 +9,12 @@ CMD_OUTPUT='/dev/null'
 
 echo "$@"
 
-while getopts c:o: option
-do
-case "${option}"
-in
-c) CAM_IFACE=${OPTARG};;
-o) CMD_OUTPUT=${OPTARG};;
-esac
+while getopts ':c:o:' option; do
+  case "${option}"
+  in
+  c) CAM_IFACE=${OPTARG};;
+  o) CMD_OUTPUT=${OPTARG};;
+  esac
 done
 
 VIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"

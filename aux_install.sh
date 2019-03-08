@@ -6,14 +6,13 @@ CMD_OUTPUT='/dev/null'
 CAM_IFACE='eth0'
 NET_IFACE='eth1'
 
-while getopts c:o:n: option
-do
-case "${option}"
-in
-c) CAM_IFACE=${OPTARG};;
-o) CMD_OUTPUT=${OPTARG};;
-n) NET_IFACE=${OPTARG};;
-esac
+while getopts ':c:o:n:' option; do
+  case "${option}"
+  in
+  c) CAM_IFACE=${OPTARG};;
+  o) CMD_OUTPUT=${OPTARG};;
+  n) NET_IFACE=${OPTARG};;
+  esac
 done
 
 AUX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
