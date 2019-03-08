@@ -4,7 +4,17 @@ set -o errexit
 
 trap 'echo "Error while installing vieworks libraries."' ERR
 
-CMD_OUTPUT=$1
+CAM_IFACE='eth0'
+CMD_OUTPUT='/dev/null'
+
+while getopts c:o: option
+do
+case "${option}"
+in
+c) CAM_IFACE=${OPTARG};;
+o) CMD_OUTPUT=${OPTARG};;
+esac
+done
 
 VIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
