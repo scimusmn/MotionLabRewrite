@@ -32,6 +32,50 @@ obtain(requests, (files)=> {
           console.log('camera is ready');
           //optionally draw the camera image. See appOld.js for details
 
+          var pre = document.querySelector('#predraw');
+          var can = document.querySelector('#display');
+
+          if (config.cam.livePreview) {
+            var ctx = can.getContext('2d');
+            var ptx = pre.getContext('2d');
+
+            var w = Math.ceil(cam.getWidth());
+            var h = Math.ceil(cam.getHeight());
+            console.log(w + ' is w and h is ' + h);
+            can.width = h;
+            can.height = w;
+
+            pre.width = w;
+            pre.height = h;
+
+            setInterval(()=> {
+              if (!cam.isCapturing()) {
+                var t = cam.getImage(function (t) {
+                  if (t && t.length >= w * h * 3) {
+                    var im = ptx.createImageData(w, h);
+                    var con = new Uint8ClampedArray(w * h * 4);
+                    for (let i = 0, j = 0; j < t.length; i += 4, j += 3) {
+                      con[i] = t[j + 2];
+                      con[i + 1] = t[j + 1];
+                      con[i + 2] = t[j];
+                      con[i + 3] = 255;
+                    }
+
+                    im.data.set(con);
+                    ptx.fillStyle = 'black';
+                    ptx.putImageData(im, 0, 0);
+
+                    ctx.save();
+                    ctx.translate(can.width / 2, can.height / 2);
+                    ctx.rotate(Math.PI / 2);
+                    ctx.drawImage(pre, -pre.width / 2, -pre.height / 2);
+                    //ctx.drawImage(pre,-320,-240);
+                    ctx.restore();
+                  }
+                });
+              }
+            }, 50);
+          }
         });
 
         if (cb) cb();

@@ -81,13 +81,14 @@ obtain(requests, (io, camera, audio)=> {
   // also manage the actual recording of images.
 
   var countdown = (count) => {
+    //set the lights in the performance cage to the correct
     pollLight.setStage(count);
 
     audio[count].currentTime = 0;
     audio[count].play();
 
     if (count > 0) {
-      if (count == 1) cam.capture();
+      if (count == 1) cam.capture();  ///actually begin recording, 1 second early
       setTimeout(() => countdown(count - 1), ((count<4) ? 1000 : 2000));
     } else {
       audio.click.currentTime = 0;

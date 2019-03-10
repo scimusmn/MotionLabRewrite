@@ -6,7 +6,7 @@ module.exports = {
   },
   record: {
     time: 3,
-    setsToStore: 21,
+    setsToStore: 16,
   },
   brightsign: {
     practiceVideoLength: 25000,
