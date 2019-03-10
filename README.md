@@ -14,7 +14,7 @@ _<span style="text-decoration:underline;">Webclient</span>_: This application al
 
 ## Setup
 
-The machine which runs this application should be running Ubuntu 18.04, and have at least 2 network interfaces available.
+The machine which runs this application should be running Ubuntu Server 18.04, and have at least 2 network interfaces available.
 
 Setup for this application follows the standard installation procedures for a stele-lite application, with a few additional flags for configuration:
 
