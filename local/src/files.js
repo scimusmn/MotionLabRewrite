@@ -12,7 +12,7 @@ obtain(requests, (fs, { execSync })=> {
 
   exports.makeFolder = folderName=>fs.mkdirSync(folderName);
 
-  exports.touchFolder = folderName => fs.utimesSync(folderName, Date.now(), Date.now()));
+  exports.touchFolder = folderName => fs.utimesSync(folderName, Date.now(), Date.now());
 
   exports.copyFolder = (src, dest)=> {
     execSync(`cp ${src} ${dest}`);
