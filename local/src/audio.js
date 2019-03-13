@@ -9,10 +9,8 @@ if (!window.muse.app.audio) window.muse.app.audio = {
 };
 var store = window.muse.app.audio;
 
-module.exports = store;
-
 obtain([], ()=> {
-  exports.load = ()=> {
+  store.load = ()=> {
     store.byIndex.length = 0;
 
     var lastAudio = ()=>store.byIndex[store.byIndex.length - 1];
@@ -36,4 +34,7 @@ obtain([], ()=> {
     store.byIndex.push(getReady);
 
   };
+
+
+  module.exports = store;
 });

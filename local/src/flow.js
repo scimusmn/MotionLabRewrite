@@ -15,6 +15,7 @@ if(!window.muse.app.flow) window.muse.app.flow = {
   waitingForSave: false,
   goShown: false,
   lastVideo: null,
+  directoryIndex: 0,
 };
 var store = window.muse.app.flow;
 
@@ -82,19 +83,19 @@ obtain(requests, (io, camera, audio)=> {
 
   var countdown = (count) => {
     //set the lights in the performance cage to the correct
-    pollLight.setStage(count);
+    io.pollLight.setStage(count);
 
-    audio[count].currentTime = 0;
-    audio[count].play();
+    audio.byIndex[count].currentTime = 0;
+    audio.byIndex[count].play();
 
     if (count > 0) {
-      if (count == 1) cam.capture();  ///actually begin recording, 1 second early
+      if (count == 1) camera.capture();  ///actually begin recording, 1 second early
       setTimeout(() => countdown(count - 1), ((count<4) ? 1000 : 2000));
     } else {
       audio.click.currentTime = 0;
       audio.click.play();
 
-      pollLight.blink();
+      io.pollLight.blink();
 
       setTimeout(function () {
         io.pollLight.stopBlink();
@@ -103,14 +104,15 @@ obtain(requests, (io, camera, audio)=> {
 
         audio.exit.play();
 
-        store.lastVideo = 'temp' + dirNum;
+        store.lastVideo = 'temp' + store.directoryIndex;
 
-        camera.endCapture(`${appRoot}/app/common/sequences/${store.lastVideo}`, ()=>{
+        camera.endCapture(`${appRoot}/app/common/captures/visitors/${store.lastVideo}`, ()=>{
           exports.onSave(store.lastVideo);
-          dirNum = (dirNum + 1)%config.record.setsToStore;
+          store.waitForSave = false;
+          store.directoryIndex = (store.directoryIndex + 1)%config.record.setsToStore;
         });
 
-      }, config.record.time);
+      }, config.record.time*1000);
     }
   };
 
@@ -121,11 +123,10 @@ obtain(requests, (io, camera, audio)=> {
 
       delayIdleMode();
       audioPracticePlaying = false;
-      clearInterval(blinkInt);
       countdown(4);
 
-      exitLights.set('off');
-      entranceLights.set('red');
+      io.exitLights.set('off');
+      io.entranceLights.set('red');
     }
 
   };

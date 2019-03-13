@@ -39,8 +39,8 @@ obtain(requests, (files)=> {
             var ctx = can.getContext('2d');
             var ptx = pre.getContext('2d');
 
-            var w = Math.ceil(cam.getWidth());
-            var h = Math.ceil(cam.getHeight());
+            var w = Math.ceil(store.cam.getWidth());
+            var h = Math.ceil(store.cam.getHeight());
             console.log(w + ' is w and h is ' + h);
             can.width = h;
             can.height = w;
@@ -49,8 +49,8 @@ obtain(requests, (files)=> {
             pre.height = h;
 
             setInterval(()=> {
-              if (!cam.isCapturing()) {
-                var t = cam.getImage(function (t) {
+              if (!store.cam.isCapturing()) {
+                var t = store.cam.getImage(function (t) {
                   if (t && t.length >= w * h * 3) {
                     var im = ptx.createImageData(w, h);
                     var con = new Uint8ClampedArray(w * h * 4);
@@ -80,7 +80,7 @@ obtain(requests, (files)=> {
 
         if (cb) cb();
 
-        exports.capture = store.cam.capture;
+        exports.capture = store.cam.capture.bind(store.cam);
       });
     } else {
       if (store.cam.ready) cb();
@@ -91,7 +91,7 @@ obtain(requests, (files)=> {
 
   exports.base = store.cam;
 
-  exports.capture = store.cam.capture;
+  exports.capture = store.cam.capture.bind(store.cam);
 
   exports.endCapture = (folderName, onSave)=> {
     store.cam.stopCapture();
