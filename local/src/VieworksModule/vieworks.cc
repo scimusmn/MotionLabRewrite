@@ -399,8 +399,8 @@ NAN_METHOD(vwCam::start) {
   RESULT result = RESULT_ERROR;
   v8::Local<v8::Function> callb = info[0].As<v8::Function>();
   if(obj->bReady){
-    result = CameraGrab(obj->camera);
-    //result = obj->camera->Grab();
+    //result = CameraGrab(obj->camera);
+    result = obj->camera->Grab();
     info.GetReturnValue().Set(Nan::New((int)result));
 	  if(!result) {
       cout << "Started camera. "<<endl;

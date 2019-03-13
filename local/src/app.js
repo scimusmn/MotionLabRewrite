@@ -89,8 +89,8 @@ obtain(requests, (flow, files, { wss }, fileServer, path)=> {
 document.onkeypress = (e) => {
   var press = String.fromCharCode(e.keyCode);
   if (press == 'g') {
-    showGo();
-  } else if (press == 'c') startCntdn();
+    //showGo();
+  } else if (press == 'c') flow.startCountdown();
   else if (press == 'r') {
     if (wss) wss.broadcast('reload');
   }
