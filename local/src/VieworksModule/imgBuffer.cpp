@@ -307,7 +307,7 @@ void imgBuffer::EIO_Save(uv_work_t * req) {
 		FREE_IMAGE_FORMAT fif = FIF_JPEG;
 		FreeImage_Save(fif, rBmp, name, 0);
 		if(i==ib->storageNumber()/2){
-			FIBITMAP * thumb = FreeImage_Rescale(rBmp,480/4,640/4);
+			FIBITMAP * thumb = FreeImage_Rescale(rBmp,480/4,640/4,FILTER_BICUBIC);
 			sprintf(name,"%s/thumb.jpg",ib->saveDir.data());
 			FreeImage_Save(fif, thumb, name, 0);
 			if (thumb != NULL) FreeImage_Unload(thumb);
