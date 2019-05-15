@@ -13,7 +13,7 @@ module.exports = {
     goVideoLength: 17000,
   },
   io: {
-    manufacturer: 'FTDI',
+    manufacturer: 'Arduino',
   },
   // windows: [
   //   {
