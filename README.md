@@ -1,5 +1,7 @@
 # Motion Lab
 
+> **NOTE**: This repo is a refactored version of the [Vieworks-Node-Module](https://github.com/scimusmn/Vieworks-Node-Module) repo. It was created specifically for Dallas after they requested SMM's help in making their original version run unfaciliated. SMM does not use this repo for their in-house version of Motion Lab. 
+
 ## Overview
 
 This is a stele-lite based application for the recording and playback of highspeed camera imagery for the Motion Lab at the Science Museum of Minnesota. It uses NodeJS, Electron, and the Vieworks SDK to capture images from the highspeed camera, save them locally as JPGs, and share them over the local network via an HTML5/Javascript application.
